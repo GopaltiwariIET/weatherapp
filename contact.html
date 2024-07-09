@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us</title>
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./index.css" />
+    <style>
+      .form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-family: "Open Sans", sans-serif;
+        color: #333;
+      }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+      input[type="text"],
+      input[type="email"],
+      textarea {
+        width: 100%;
+        padding: 0.5rem;
+        margin: 0.5rem 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .btn {
+        padding: 0.5rem 1rem;
+        margin: 0.5rem 0;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #000000;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="logo">
+          <img
+            class="logo-img"
+            src="./images/logo.svg"
+            alt="Weather-Report"
+            title="Get your live weather update here" />
+          <span class="logo-text">Weather-Report</span>
+        </div>
+        <nav class="navbar">
+          <ul>
+            <li class="navlist" id="nav-1"><a href="/">Home</a></li>
+            <li class="navlist" id="nav-4">
+              <a href="./features.html">Features</a>
+            </li>
+            <li class="navlist" id="nav-3" title="How to use">
+              <a href="./about.html">About Us </a>
+            </li>
+            <li class="navlist" id="nav-0">
+              <a href="./contact.html">Contact Us</a>
+            </li>
+            <li class="navlist" id="nav-2">
+              <a href="./not_available.html">Use as Extension</a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <form class="form">
+          <h1>Contact Us!</h1>
+          <p>
+            In case you want to share your feedback , suggestions or any issue.
+          </p>
+          <p>please contact...</p>
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              required />
+          </div>
+          <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea
+              class="form-control"
+              id="message"
+              name="message"
+              required></textarea>
+          </div>
+
+          <button class="btn" id="submit" type="submit" class="btn btn-primary">
+            Submit
+          </button>
+        </form>
+      </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      const name = document.getElementById("name");
+      const email = document.getElementById("email");
+      const message = document.getElementById("message");
+      document.getElementById("submit").addEventListener("click", (e) => {
+        e.preventDefault();
+
+        if (name == "" || email == "" || message == "") {
+          alert("Please fill out all fields!");
+        } else {
+          axios
+            .post(
+              "https://notesapi-i6y6jvz2za-uc.a.run.app/submit/feedback",
+              {
+                name: name.value,
+                email: email.value,
+                message: message.value,
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  "Access-Control-Allow-Origin": "*",
+                  mode: "cors",
+                },
+              }
+            )
+            .then(() => {
+              window.location.href = "./submitted.html";
+            })
+            .catch((error) => {
+              alert("Something went wrong: " + error.message);
+            });
+        }
+      });
+    </script>
+  </body>
+</html>
